@@ -1,12 +1,21 @@
-const SPREADSHEET_ID = '1OCVaGfgp-1dLdCdkon4sepmJJ5EKQIfsIWM18_CmDAo'; // Replace with your spreadsheet ID
-const API_KEY = 'AIzaSyBVMmQQtaGToyRhlOgo1ujXTReS0T1LQXQ'; // Replace with your API key
-const SHEET_NAME = 'Data Dokter';
+const SPREADSHEET_ID = '1OCVaGfgp-1dLdCdkon4sepmJJ5EKQIfsIWM18_CmDAo'; // Your spreadsheet ID
+const API_KEY = 'AIzaSyBVMmQQtaGToyRhlOgo1ujXTReS0T1LQXQ'; // Your API key
+const SHEET_NAME = 'Data Dokter'; // Your sheet name
 
 async function fetchDoctorData() {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.values; // Returns the rows from the sheet
+    console.log('Fetching data from:', url); // Log the API URL
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.values || []; // Ensure an array is returned
+    } catch (error) {
+        console.error('Error fetching doctor data:', error);
+        return []; // Return an empty array on error
+    }
 }
 
 // Call the fetch function and populate the dropdowns
@@ -16,6 +25,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const serviceTypeDropdown = document.getElementById('service-type');
 
     const rows = await fetchDoctorData();
+    if (!rows.length) {
+        alert('No data found or access denied.');
+        return; // Exit if no data
+    }
+
     const clinics = new Set();
 
     // Extract unique clinics and populate the clinic dropdown
