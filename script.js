@@ -1,6 +1,7 @@
 const SPREADSHEET_ID = '1OCVaGfgp-1dLdCdkon4sepmJJ5EKQIfsIWM18_CmDAo'; // Your spreadsheet ID
 const API_KEY = 'AIzaSyBVMmQQtaGToyRhlOgo1ujXTReS0T1LQXQ'; // Your API key
 const SHEET_NAME = 'Data Dokter'; // Your sheet name
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwfQY0or99QEH4rutrc1JA3v_DpZA4pSnqfNWVMTglWO0nZL8kQBrPdBHZpQgTNj0m_/exec'; // Replace with your Google Apps Script URL
 
 async function fetchDoctorData() {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
@@ -89,13 +90,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const selectedDoctor = doctorDropdown.value;
 
         // Record to Google Sheets here (using an API or a script)
-        const response = await fetch('https://script.google.com/macros/library/d/1h1Dyk0gNgQj3lI6u_JyEVTev-5se_Veppln_mfrdG_JfO2uLQ3dtGHRT/1', { // Replace with your Google Apps Script URL
+        const response = await fetch(WEB_APP_URL, { // Replace with your Google Apps Script URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ doctor: selectedDoctor })
         });
+
+        if (!response.ok) {
+            console.error('Failed to submit doctor:', response.status);
+            alert('Error submitting doctor: ' + response.status);
+            return;
+        }
 
         const result = await response.json();
         console.log('Response:', result);
