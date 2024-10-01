@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Telesales Dashboard</title>
 </head>
 <body>
-    <h1>Telesales Dashboard</h1>
     <form id="telesales-form">
-        <label for="clinic">Choose a Clinic:</label>
-        <select id="clinic"></select>
+        <label for="clinic">Select Clinic:</label>
+        <select id="clinic">
+            <option value="">-- Select Clinic --</option>
+        </select>
 
         <label for="service-type">Type of Service:</label>
         <select id="service-type">
-            <option value="behel">Behel</option>
             <option value="non-behel">Non-Behel</option>
+            <option value="behel">Behel</option>
         </select>
 
-        <label for="doctor">Choose a Doctor:</label>
-        <select id="doctor"></select>
+        <label for="doctor">Select Doctor:</label>
+        <select id="doctor">
+            <option value="">-- Select Doctor --</option>
+        </select>
 
         <button type="submit">Submit</button>
     </form>
