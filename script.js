@@ -1,8 +1,9 @@
 const SPREADSHEET_ID = '1OCVaGfgp-1dLdCdkon4sepmJJ5EKQIfsIWM18_CmDAo'; // Your spreadsheet ID
 const API_KEY = 'AIzaSyBVMmQQtaGToyRhlOgo1ujXTReS0T1LQXQ'; // Your API key
 const SHEET_NAME = 'Data Dokter'; // Your sheet name
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxGoGwf5y_izAR8qxxxmcNOeoFNV-SfuqcB0DFjspXDfsxZLKmXhkYZ7ftFkPnUIQfpTQ/exec'; // Replace with your Google Apps Script URL
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyw4pLqnZUywmULj6FgZpcAnyksJd3XWDXLVSaUkUVE9FyM5iNN7h2CJ8gz3c-XQ6_O1w/exec'; // Replace with your Google Apps Script URL
 
+// Fetch doctor data from Google Sheets
 async function fetchDoctorData() {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
     console.log('Fetching data from:', url); // Log the API URL
@@ -46,13 +47,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         clinicDropdown.appendChild(option);
     });
 
+    // Update doctors based on selected service type
     serviceTypeDropdown.addEventListener('change', () => {
         const serviceType = serviceTypeDropdown.value;
         updateDoctors(serviceType, rows);
     });
 
     function updateDoctors(serviceType, rows) {
-        doctorDropdown.innerHTML = '';
+        doctorDropdown.innerHTML = ''; // Clear previous options
         const selectedClinic = clinicDropdown.value;
 
         const filteredDoctors = rows.slice(1).filter(row => {
@@ -89,8 +91,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         event.preventDefault();
         const selectedDoctor = doctorDropdown.value;
 
-        // Record to Google Sheets here (using an API or a script)
-        const response = await fetch(WEB_APP_URL, { // Replace with your Google Apps Script URL
+        // Record to Google Sheets here
+        const response = await fetch(WEB_APP_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
