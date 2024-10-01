@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const selectedDoctor = doctorDropdown.value;
 
         // Record to Google Sheets here (using an API or a script)
-        const response = await fetch('https://script.google.com/macros/library/d/1h1Dyk0gNgQj3lI6u_JyEVTev-5se_Veppln_mfrdG_JfO2uLQ3dtGHRT/1', { // Replace with your Google Apps Script URL
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwfQY0or99QEH4rutrc1JA3v_DpZA4pSnqfNWVMTglWO0nZL8kQBrPdBHZpQgTNj0m_/exec', { // Replace with your Google Apps Script URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
