@@ -94,7 +94,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Record to Google Sheets here
         const response = await fetch(WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -102,8 +101,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (!response.ok) {
-            console.error('Failed to submit doctor:', response.status);
-            alert('Error submitting doctor: ' + response.status);
+            const errorText = await response.text(); // Read the error response text
+            console.error('Failed to submit doctor:', response.status, errorText);
+            alert('Error submitting doctor: ' + response.status + ' ' + errorText);
             return;
         }
 
