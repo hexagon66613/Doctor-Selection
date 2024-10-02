@@ -1,7 +1,7 @@
 const SPREADSHEET_ID = '1OCVaGfgp-1dLdCdkon4sepmJJ5EKQIfsIWM18_CmDAo'; // Your spreadsheet ID
 const API_KEY = 'AIzaSyBVMmQQtaGToyRhlOgo1ujXTReS0T1LQXQ'; // Your API key
 const SHEET_NAME = 'Data Dokter'; // Your sheet name
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz5RN-_p_ve6tlUtlrJ6yE-kBDw3oO4it4L6caALQ27iXs46zJ1D2UFFnDJlHYqvhbuSg/exec'; // Replace with your Google Apps Script URL
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx8OtZJ9Py5R22slz0BDiVQCZU-Rpq_jaO2GMpQFuR00CSk8iunW_MsPZw0l5CdRjBzfQ/exec'; // Replace with your Google Apps Script URL
 
 // Fetch doctor data from Google Sheets
 async function fetchDoctorData() {
@@ -91,13 +91,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         event.preventDefault();
         const selectedDoctor = doctorDropdown.value;
 
+        // Prepare form data
+        const formData = new URLSearchParams();
+        formData.append("doctor", selectedDoctor);
+
         // Record to Google Sheets here
         const response = await fetch(WEB_APP_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify({ doctor: selectedDoctor })
+            body: formData.toString() // Send form data
         });
 
         if (!response.ok) {
