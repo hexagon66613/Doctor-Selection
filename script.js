@@ -1,7 +1,7 @@
 const SPREADSHEET_ID = '1OCVaGfgp-1dLdCdkon4sepmJJ5EKQIfsIWM18_CmDAo'; // Your spreadsheet ID
 const API_KEY = 'AIzaSyBVMmQQtaGToyRhlOgo1ujXTReS0T1LQXQ'; // Your API key
 const SHEET_NAME = 'Data Dokter'; // Your sheet name
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzxUszFT-xIOKYA5NiG4SSMl1hWwzZ0KtN6d9FLf5a_x_TTy3g4ph40Kk0KIEqapJx3pw/exec'; // Replace with your Google Apps Script URL
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwD3nfjCYAFJYO1bG3BPL31zO4qdgnCIzTaRyF24oWisIPH4bD0mWHh9t_28gNDLNTGdg/exec'; // Replace with your Google Apps Script URL
 
 // Fetch doctor data from Google Sheets
 async function fetchDoctorData() {
@@ -94,14 +94,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Record to Google Sheets here
         const response = await fetch(WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors', // Set to no-cors
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ doctor: selectedDoctor })
         });
 
-        // No response handling since response body is not accessible in no-cors mode
+        if (!response.ok) {
+            const errorText = await response.text(); // Read the error response text
+            console.error('Failed to submit doctor:', response.status, errorText);
+            alert('Error submitting doctor: ' + response.status + ' ' + errorText);
+            return;
+        }
+
+        const result = await response.json();
+        console.log('Response:', result);
         alert('Doctor submitted: ' + selectedDoctor);
     });
 });
