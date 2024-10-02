@@ -1,7 +1,7 @@
 const SPREADSHEET_ID = '1OCVaGfgp-1dLdCdkon4sepmJJ5EKQIfsIWM18_CmDAo'; // Your spreadsheet ID
 const API_KEY = 'AIzaSyBVMmQQtaGToyRhlOgo1ujXTReS0T1LQXQ'; // Your API key
 const SHEET_NAME = 'Data Dokter'; // Your sheet name
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyG-s8PsAvQWfyPj8N1ZIP_Un7rreNv4trNYaTe0WguGOI-GU8pacBEPg3Q1AZNVoP22Q/exec'; // Replace with your Google Apps Script URL
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx32tILc3rFGn7fhpAzPqzudteXguY9DzBqy-46uLqjgIj-_3gDGONFkA-kc6MpkFwlKA/exec'; // Replace with your Google Apps Script URL
 
 // Fetch doctor data from Google Sheets
 async function fetchDoctorData() {
